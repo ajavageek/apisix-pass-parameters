@@ -1,0 +1,41 @@
+upstreams:
+  - id: 1
+    nodes:
+      "httpbin:80": 1
+
+routes:
+  - uri: /path/:n/:offset
+    upstream_id: 1
+    plugins:
+      path-variables: ~
+      proxy-rewrite:
+        regex_uri:
+          - "^/path(.*)"
+          - "/links$1"
+  - uri: /query*
+    upstream_id: 1
+    plugins:
+      query-params: ~
+      proxy-rewrite:
+        regex_uri:
+          - "^/query(.*)"
+          - "/get$1"
+  - uri: /headers
+    upstream_id: 1
+    plugins:
+      request-headers: ~
+  - uri: /body
+    methods:
+     - POST
+    upstream_id: 1
+    plugins:
+      request-body: ~
+      proxy-rewrite:
+        regex_uri:
+          - "^/body"
+          - "/post$1"
+  - uri: /cookies
+    upstream_id: 1
+    plugins:
+      cookies: ~
+#END

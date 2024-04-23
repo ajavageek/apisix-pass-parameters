@@ -1,0 +1,15 @@
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+apisix:
+  extra_lua_path: /opt/?.lua
+  router:
+    http: radixtree_uri_with_parameter
+plugins:
+  - proxy-rewrite
+  - path-variables
+  - query-params
+  - request-headers
+  - request-body
+  - cookies

@@ -1,0 +1,11 @@
+services:
+  httpbin:
+    image: kennethreitz/httpbin
+  apisix:
+    image: apache/apisix:3.9.0-debian
+    volumes:
+      - ./apisix/conf/config.yml:/usr/local/apisix/conf/config.yaml:ro
+      - ./apisix/conf/apisix.yml:/usr/local/apisix/conf/apisix.yaml:ro
+      - ./apisix/plugins:/opt/apisix/plugins:ro
+    ports:
+      - "9080:9080"
